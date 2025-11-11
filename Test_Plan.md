@@ -140,7 +140,7 @@
 -
 -
 
-## **Device Compatibity**
+## **Device Compatibility**
 
 **Objectives:** To ensure that the application fuctions properly in a number of devices
 
