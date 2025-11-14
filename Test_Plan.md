@@ -139,9 +139,11 @@
 
 ### **Screenshot evidence**
 **Compatible on Microsoft edge**
+
 <img width="1326" height="683" alt="image" src="https://github.com/user-attachments/assets/38ec01c7-7525-454f-acb8-79d449edc804" />
 
 **Compatible with Chrom browser**
+
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/01fe59b9-1b1f-4e5b-87ff-ebc7f82d1e68" />
 
 
@@ -159,15 +161,19 @@
 ### **Screenshot evidence**
 
 **Desktop compatible**
+
 <img width="1357" height="727" alt="image" src="https://github.com/user-attachments/assets/34821c25-d8f4-4bba-a2de-6e435650d8b4" />
 
 **Tablet compatible**
+
 <img width="652" height="678" alt="image" src="https://github.com/user-attachments/assets/fdc185f3-0670-4c23-8d1c-9ad99b671538" />
 
 **Iphone 14 Pro max**
+
 <img width="582" height="587" alt="image" src="https://github.com/user-attachments/assets/3038f4fa-6edd-419b-8d8f-d42105102cd9" />
 
 **Samsung Galaxy A51/A71**
+
 <img width="638" height="572" alt="image" src="https://github.com/user-attachments/assets/db18a1fa-951d-4343-8d10-a9b43567505e" />
 
 
