@@ -257,13 +257,13 @@ User session does not time out.
 **GitHub Issues Filed:**  
 ---
 |Bug /Issue |Severity |`link here`|
-
-|The filter section on the admin dashboard does not filter requests by status and location|Medium|https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/2|
-|Admin user cannot use the "Edit" button in the "All requests" section to edit a request|Medium|https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/3|
-|There are some missing requests on the "system statistics" section.|Medium|https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/4|
-|When a user logs out of their account, their login credentials persist on the input fields.|Critical|https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/5|
-|The "Awareness" page has no text alternatives for non-text content |Medium|https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/6|
-|User session timeout has not been implemented|High|https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/8|
+|------------|---------|-----------|
+| The filter section on the admin dashboard does not filter requests by status and location | Medium | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/2 |
+| Admin user cannot use the "Edit" button in the "All requests" section to edit a request | Medium | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/3 |
+| There are some missing requests on the "system statistics" section. | Medium | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/4 |
+| When a user logs out of their account, their login credentials persist on the input fields. | Critical | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/5 |
+| The "Awareness" page has no text alternatives for non-text content | Medium | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/6 |
+| User session timeout has not been implemented | High | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/8 |
 
 
 
