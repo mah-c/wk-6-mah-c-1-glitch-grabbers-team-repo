@@ -109,8 +109,9 @@
 
 | Current State | Action / Event | Expected Next State | Actual Next State | Pass/Fail |
 |----------------|----------------|---------------------|-------------------|-----------|
-|----------------|----------------|---------------------|-------------------|-----------|
-|----------------|----------------|---------------------|-------------------|-----------|
+| Start/Idle | Login | Users dashboard page | Users dashboard page | Pass |
+|InputReady | Filter requests by status and location | List of requests based on applied filters | Only one filter is applied to the results | Fail|
+| Home page | log out | Reset/Clear(End session and back to login page) | Back to Home page | Fail|
 |----------------|----------------|---------------------|-------------------|-----------|
 
 ✅ **Task:**
@@ -120,9 +121,10 @@
 
 
 **Findings**
----
--
--
+--- Login Page
+- On the Login page, once a user enters valid login credentials, the user receives a success message informing them of the successful login and they are immediately redirected to their dashboard.
+--- Home page
+  - On the home page, a user is able to schedule a pick up date by filling in a form. Once valid details have been provided in the input fields, the user gets a success message "Request submitted successfully!" and on navigating to the dashboard, they are able to view a list of their requests which updates automatically in descending order.
 
 ## **Browser Compatiblity**
 
@@ -130,15 +132,18 @@
 
 |Modern Browser- Specific version|Findings |
 |----------------|-------------------------------------|
-|Chrome|-------------------------------------|
-|Firefox|-------------------------------------|
-|Microsoft Edge|-------------------------------------|
-|Safari|-------------------------------------|
+|Chrome| Compatible |
+|Firefox| Incompatible |
+|Microsoft Edge| Compatible |
+|Safari| Compatible |
 
 ### **Screenshot evidence**
----
--
--
+**Compatible on Microsoft edge**
+<img width="1326" height="683" alt="image" src="https://github.com/user-attachments/assets/38ec01c7-7525-454f-acb8-79d449edc804" />
+
+**Compatible with Chrom browser**
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/01fe59b9-1b1f-4e5b-87ff-ebc7f82d1e68" />
+
 
 ## **Device Compatibility**
 
@@ -146,15 +151,25 @@
 
 |Device |Outcome|
 |----------------|-------------------------------------|
-|Desktop|-------------------------------------|
-|Tablet|-------------------------------------|
-|Iphone 14 Pro max|-------------------------------------|
-|Samsung Galaxy A51/A71|-------------------------------------|
+|Desktop| Compatible |
+|Tablet| Compatible |
+|Iphone 14 Pro max| Compatible |
+|Samsung Galaxy A51/A71| Compatible |
 
 ### **Screenshot evidence**
----
--
--
+
+**Desktop compatible**
+<img width="1357" height="727" alt="image" src="https://github.com/user-attachments/assets/34821c25-d8f4-4bba-a2de-6e435650d8b4" />
+
+**Tablet compatible**
+<img width="652" height="678" alt="image" src="https://github.com/user-attachments/assets/fdc185f3-0670-4c23-8d1c-9ad99b671538" />
+
+**Iphone 14 Pro max**
+<img width="582" height="587" alt="image" src="https://github.com/user-attachments/assets/3038f4fa-6edd-419b-8d8f-d42105102cd9" />
+
+**Samsung Galaxy A51/A71**
+<img width="638" height="572" alt="image" src="https://github.com/user-attachments/assets/db18a1fa-951d-4343-8d10-a9b43567505e" />
+
 
 ## 📋 **Test Environment Setup Data**
 
