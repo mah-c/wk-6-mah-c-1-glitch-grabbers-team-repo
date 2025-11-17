@@ -39,9 +39,9 @@
 
 | Input | Partitions (Valid / Invalid) | Representative Value | Expected Behavior | Actual Behavior | Pass/ Fail
 |--------|-------------------------------|----------------------|-------------------|-----------------|-----------------|
-| Name|                          |                      |                   |                 |
-|Email |                               |                      |                   |                 |
-| Password|                          |                      |                   |                 |
+| Name| Invalid | 33454545654 | Error message eg"Invalid" | request submitted successfully! | Fail |
+|Email | Invalid | admincleancity.com | Error message eg "invalid input" | Error message "please include an '@' in the email address" | Pass |
+| Password| Invalid | ty | Error mrssage eg "password too short" | Error message "password must be atleast 3 characters long" | Pass |
 | Confirm Password|                          |                      |                   |                 |
 
 
@@ -62,8 +62,8 @@
 
 | Parameter | Boundaries Identified | Test Values  | Expected | Actual | Notes |
 |------------|------------------------|----------------------------|-----------|---------|--------|
-| Date Boundaries | | | | | |
-|Text Input Boundaries | | | | | |
+| Date Boundaries | Current date +-1 | 10/6/2008 | Fail:date can only be current and beyond | Pass:request submitted successfully! | Boundary values should be implemented on the date values so that a user cannot schedule a request later that the current date.|
+|Text Input Boundaries | Text validation | 343854 | fail: name values on form cannot be numerical | Pass: request submitted successfully! | While filling the form for waste pickup schedule, a user's name cannot be numerical. |
 |Numeric Boundaries | | | | | |
 
 ✅ **Task:**
@@ -190,9 +190,7 @@
 |No internet connection|Pass|
 
 ### **Findings**
----
--
--
+The application functions well both with internet access enabled and when internet connection is disabled. A user is able to login and schedule a pickup request. An Admin user is able to login and change the status of a request as well as logout.
 
 
 ## **Defects Report and Risk Analysis**
