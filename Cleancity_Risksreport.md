@@ -27,6 +27,8 @@ Each risk is evaluated using Probability, Impact, Severity, and Risk Level.
 | RS_007 | Request Editing Issues | Admin fails to edit requests | Very High | Very High | High | **Critical** |
 | RS_008 | Status Not Updating | Status not reflected in statistics | Low | Medium | Medium | **Moderate** |
 | RS_009 | Dashboard Update Failure | Request submitted but not updated | Low | High | Medium | **Moderate** |
+| RS_010 | User Can Schedule a Pickup for a Past Date. | These entries can lead to operational confusion and incorrect data in the system. | High | High | High | **Critical** |
+| RS_011 | Application Accepts Numerical Inputs as User Name During Registration. | These entriesc can lead to poor data quality, potential confusion when identifying users, and inconsistencies across the system. | High | Medium | Medium | **Moderate** |
 
 ---
 
