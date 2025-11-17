@@ -185,9 +185,9 @@
 
 |Network condition|Outcome|
 |----------------|-------------------------------------|
-|4G connection|-------------------------------------|
-|3G connection|-------------------------------------|
-|No internet connection|-------------------------------------|
+|4G connection|Pass|
+|3G connection|Pass|
+|No internet connection|Pass|
 
 ### **Findings**
 ---
