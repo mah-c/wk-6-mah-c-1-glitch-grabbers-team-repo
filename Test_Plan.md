@@ -273,6 +273,33 @@ The user session should timeout after 45minutes of idle time and should require 
 **Actual behavior**
 User session does not time out.
 
+### **Defect/ Bug 7: User Can Schedule a Pickup for a Past Date.**
+
+**Steps to Produce**
+- Navigate to the home tab as a user
+- Fill in the form to schedule a pickup request
+- on the preferred pickup date section select a date in the past (eg yesterday)
+- submit the request.
+
+**Expected behavior**
+The application should prevent users from selecting or submitting a pickup for any past date and should display a validation message.
+
+**Actual behavior**
+The system accepts the past date and schedules the pickup successfully.
+
+### **Defect/ Bug 8: Application Accepts Numerical Inputs as User's Name During scheduling a pickup request.**
+
+**Steps to Produce**
+- Navigate to the waste pickup scheduler.
+- Enter a numeric-only value in the “Full Name” field (e.g., 12345).
+- Complete the remaining fields and submit the form
+
+**Expected behavior**
+The system should validate the “Full Name” field and reject numeric-only inputs, prompting the user to enter a valid name.
+
+**Actual behavior**
+The application accepts numeric-only names and completes the request successfully.
+
 **GitHub Issues Filed:**  
 ---
 |Bug /Issue |Severity |`link here`|
@@ -283,6 +310,8 @@ User session does not time out.
 | When a user logs out of their account, their login credentials persist on the input fields. | Critical | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/5 |
 | The "Awareness" page has no text alternatives for non-text content | Medium | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/6 |
 | User session timeout has not been implemented | High | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/8 |
+| User Can Schedule a Pickup for a Past Date. | High | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/9 |
+| Application Accepts Numerical Inputs as User's Name During scheduling a pickup request.| High | https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues/10|
 
 
 
@@ -298,6 +327,8 @@ User session does not time out.
 | Browser compatibility | Medium | Medium | The application Fails in some browsers causing user frustrations. |
 | Login failure | Medium | High | User providing invalid login details to login. If appropriate erroe handling techniques are not implemented, it could lead to the application crushing. |
 |SQL injection | High | Critical | When proper data sanitization is not implemented, a hacker can use sql injection to insert malicious code in to the application. |
+| User Can Schedule a Pickup for a Past Date.| High | Medium | These entries can lead to operational confusion and incorrect data in the system.|
+| Application Accepts Numerical Inputs as User Name During Registration.| High | Medium | These entriesc can lead to poor data quality, potential confusion when identifying users, and inconsistencies across the system.|
 
 
 ##  **Test Automation**
