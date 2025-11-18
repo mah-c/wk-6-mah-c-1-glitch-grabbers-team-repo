@@ -48,10 +48,10 @@ The CleanCity Waste Pickup Scheduler application has undergone **comprehensive t
 
 | Metric                       | Value            |
 |------------------------------|------------------|
-| Total Test Cases Planned     | 63               |
-| Total Test Cases Executed    | 63 (100%)        |
-| Passed                       | 59 (94.6%)       |
-| Failed                       | 4 (6.3%)         |
+| Total Test Cases Planned     | 34              |
+| Total Test Cases Executed    | 34 (100%)        |
+| Passed                       | 24(94.6%)       |
+| Failed                       | 10 (6.3%)         |
 | Blocked                      | 0                |
 | Not Run/Not Covered          | 0                |
 | Automation Coverage          | 72% (45/63)      |
