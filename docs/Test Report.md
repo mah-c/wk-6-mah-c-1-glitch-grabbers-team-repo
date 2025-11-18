@@ -230,14 +230,20 @@ pie title Test Implementation
 
 ## 9. 📑 Issue Tracking, Evidence & Kanban
 
-- All issues are tracked in GitHub: [Glitch Grabbers Project Issues](https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues)
-- Sprint boards, burndown charts: in Jira & GitHub Kanban (see screenshots)
-- Artifacts:
-  - [Sprint Status Report (PDF)](link_to_attached_sprint_report.pdf)
-  - [Defect Export CSV](link_to_defect_export.csv)
-  - [Automation Logs](link_to_automation_logs.txt)
-  - [Coverage Report (HTML)](link_to_coverage_report.html)
-  - [Jira/Kanban Board Screenshot](assets/board-screenshot.png)
+
+- All issues logged in GitHub: [[mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo]([https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo](https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues))](https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues)
+- Sprint dashboards and burndown charts available in Jira/GitHub (see attachments).
+- Raw [automation logs](link_to_automation_logs.txt) and [coverage report](link_to_coverage_report.html) attached separately.
+
+<img width="2193" height="1336" alt="image" src="https://github.com/user-attachments/assets/4b12fa12-c8a5-47da-8d67-7cf0784948ce" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/ee92012e-2d77-4c47-a4dc-b4c9a0b32af2" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/04115f6a-a603-4235-9f1b-1fb953162aa2" />
+
+<img width="2549" height="1363" alt="image" src="https://github.com/user-attachments/assets/4287e42c-1bab-4c17-9998-483792c67669" />
+<img width="2559" height="1530" alt="image" src="https://github.com/user-attachments/assets/91f7aa31-ebbd-4c66-b993-2d3582871172" />
+<img width="800" height="449" alt="image" src="https://github.com/user-attachments/assets/a5e050c7-d3e2-44f7-b327-e100590b7c08" />
 
 ---
 
