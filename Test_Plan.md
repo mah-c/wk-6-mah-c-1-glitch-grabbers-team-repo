@@ -53,9 +53,7 @@
 - Test one input from each partipation at a time
 
 **Findings:**  
----
--
--
+On the registration page, a user is able to fill in the form and register successfully. The form registers a user irregardless of the information provided. It is recommended that data should be validated before a successful registration eg user should not be allowed to use numerical-only input as first-name, password length should be at least 8 alpha numeric characters etc
 ### Boundary Value Analysis (BVA)
 
 **Objective:** Test edge values around valid input limits.
@@ -64,7 +62,7 @@
 |------------|------------------------|----------------------------|-----------|---------|--------|
 | Date Boundaries | Current date +-1 | 10/6/2008 | Fail:date can only be current and beyond | Pass:request submitted successfully! | Boundary values should be implemented on the date values so that a user cannot schedule a request later that the current date.|
 |Text Input Boundaries | Text validation | 343854 | fail: name values on form cannot be numerical | Pass: request submitted successfully! | While filling the form for waste pickup schedule, a user's name cannot be numerical. |
-|Numeric Boundaries | | | | | |
+
 
 ✅ **Task:**
 --- 
@@ -74,9 +72,9 @@
 - Empty inputs eg. blank name
 
 **Findings:**  
----
--
--
+The application allows a user to schedule a waste pickup date that is in the past. This may lead to operational confusion and data inconsistencies.
+Inaddition, a user is able to register with 2 characters as a password. This is risky as an attacker can easily crack the password and impersonate the user.
+It is also good to note that all input fields in the application do not allow for blank inputs.
 
 ## Decision Table Testing (DTT)
 
@@ -84,15 +82,13 @@
 
 | Filter by Status |Filter by Location  |Expected Outcome  |Actual Outcome | Pass/ Fail |
 |--------|--------------|---------------|-------------------------------------------|----------------|
-|--------|--------------|---------------|-------------------------------------------|----------------|
-|--------|--------------|---------------|-------------------------------------------|----------------|
-|--------|--------------|---------------|-------------------------------------------|----------------|
-|--------|--------------|---------------|-------------------------------------------|----------------|
+| All Statuses | All Statuses | A list of all available requests | A list of all available requests | Pass |
+| Pending | All Statuses | A list of all requests with status=Pending |  A list of all requests with status=Pending | Pass |
+| All Statuses | Nairobi | A list of all requests with location=Nairobi | A list of all requests with location=Nairobi | Pass |
+| Missed | Mombasa | A list of all requests with status=Missed and location=Mombasa | A list of all requests with location=Mombasa ony | Fail |
 
 **Findings:**  
----
--
--
+The application is able to list all requests when a single filter is applied ie status only filter or location only filter. When both status and location filters are applied, the application only lists requests with the location filter.
 
 ## 🔄 State / Flow Testing
 
@@ -112,7 +108,7 @@
 | Start/Idle | Login | Users dashboard page | Users dashboard page | Pass |
 |InputReady | Filter requests by status and location | List of requests based on applied filters | Only one filter is applied to the results | Fail|
 | Home page | log out | Reset/Clear(End session and back to login page) | Back to Home page | Fail|
-|----------------|----------------|---------------------|-------------------|-----------|
+
 
 ✅ **Task:**
 --- 
@@ -132,10 +128,10 @@
 
 |Modern Browser- Specific version|Findings |
 |----------------|-------------------------------------|
-|Chrome| Compatible |
-|Firefox| Incompatible |
-|Microsoft Edge| Compatible |
-|Safari| Compatible |
+|Chrome 142| Compatible |
+|Firefox 145.0| Incompatible |
+|Microsoft Edge 132| Compatible |
+|Safari 18.3.1| Compatible |
 
 ### **Screenshot evidence**
 **Compatible on Microsoft edge**
@@ -364,6 +360,6 @@ The application accepts numeric-only names and completes the request successfull
 How confident the group members are with the project(Scale 1-10)
 |Name|Level of confidence|email|
 |----------------|------------------|----------------|
-|Mercy Benu|------------------|benumercy1@gmail.com|
+|Mercy Benu| on a scale of 1-10,I'd say 8. This is because each team member participated fully to their allocated tasks. Personally, I've really learnt alot while doing the manual tests and also learning the various test automation tools. |benumercy1@gmail.com|
 |Viron Otieno|------------------|`ochiengviron06@gmail.com`|
 |meseret akalu|------------------|meseretinsa@gmail.com|
