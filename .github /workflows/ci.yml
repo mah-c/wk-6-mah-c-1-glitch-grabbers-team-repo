@@ -119,7 +119,7 @@ jobs:
       # --------------------------
       # 9️⃣ Placeholder for Future Test Automation
       # --------------------------
-      - name: Test Automation Placeholder
+      - name: Test Automation Placeholder test
         run: |
           echo "Future automation tests (API, integration, performance) will save reports here."
           mkdir -p reports/future-tests
