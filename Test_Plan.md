@@ -42,7 +42,6 @@
 | Name| Invalid | 33454545654 | Error message eg"Invalid" | request submitted successfully! | Fail |
 |Email | Invalid | admincleancity.com | Error message eg "invalid input" | Error message "please include an '@' in the email address" | Pass |
 | Password| Invalid | ty | Error mrssage eg "password too short" | Error message "password must be atleast 3 characters long" | Pass |
-| Confirm Password|                          |                      |                   |                 |
 
 
 
