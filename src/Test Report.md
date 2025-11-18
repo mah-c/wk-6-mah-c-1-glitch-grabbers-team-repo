@@ -161,9 +161,9 @@ pie title Risk Level Distribution
 
 | Metric                              | Value             |
 |--------------------------------------|-------------------|
-| Total Test Cases                     | 63                |
-| Automated (Selenium/Cypress)         | 45                |
-| Manual                               | 18                |
+| Total Test Cases                     | 15                |
+| Automated (Selenium/Cypress)         | 15                |
+| Manual                               | 34               |
 | Automation Percentage                | 72%               |
 | Code Coverage (Unit+Integration)     | 87%               |
 | Unit Test Frameworks                 | Jest, Mocha, Cypress (UI) |
