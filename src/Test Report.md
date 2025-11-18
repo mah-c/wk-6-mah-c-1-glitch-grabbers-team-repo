@@ -186,6 +186,17 @@ pie title Test Implementation
 - Sprint dashboards and burndown charts available in Jira/GitHub (see attachments).
 - Raw [automation logs](link_to_automation_logs.txt) and [coverage report](link_to_coverage_report.html) attached separately.
 
+<img width="2193" height="1336" alt="image" src="https://github.com/user-attachments/assets/4b12fa12-c8a5-47da-8d67-7cf0784948ce" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/ee92012e-2d77-4c47-a4dc-b4c9a0b32af2" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/04115f6a-a603-4235-9f1b-1fb953162aa2" />
+
+
+
+
+
+
 ---
 
 ## 10. 🪄 Recommendations & Action Items
