@@ -37,8 +37,6 @@ The CleanCity Waste Pickup Scheduler application has undergone **comprehensive t
 |----------------------|---------------------------------------------------------|
 | OS                   | Windows 10, MacOS Ventura, Android 13, iOS 17           |
 | Browser Versions     | Chrome, Firefox, Edge, Safari, UC Browser (latest)      |
-| Web Server           | Apache Tomcat 10                                        |
-| Database             | MySQL 8.0                                               |
 | Test Management      | TestLink, Jira/GitHub                                   |
 | Automation           | Selenium WebDriver, Cypress                             |
 
