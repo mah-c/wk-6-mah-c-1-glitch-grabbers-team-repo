@@ -1,1 +1,131 @@
+name: CI Pipeline
 
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3️⃣ Install dependencies (including jest-html-reporters & mochawesome)
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install --save-dev jest-html-reporters mochawesome
+
+      # --------------------------
+      # 4️⃣ Run Jest Unit Tests with HTML + Coverage
+      # --------------------------
+      - name: Run Jest Unit Tests
+        run: |
+          mkdir -p reports/jest
+          npx jest "Unit Test/**/*.test.js" --ci --verbose --coverage --coverageReporters=text
+        continue-on-error: false
+
+      # Upload Jest HTML Report
+      - name: Upload Jest HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-html-report
+          path: reports/jest/jest-report.html
+
+      # Upload Jest Coverage JSON
+      - name: Upload Jest Coverage JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-coverage
+          path: coverage/coverage-final.json
+
+      # --------------------------
+      # 5️⃣ Install live-server
+      # --------------------------
+      - name: Install Live Server
+        run: npm install -g live-server
+
+      # --------------------------
+      # 6️⃣ Start Live Server for Cypress
+      # --------------------------
+      - name: Start Live Server
+        run: |
+          live-server ./ --port=5500 &
+          npx wait-on http://127.0.0.1:5500
+        shell: bash
+
+      # --------------------------
+      # 7️⃣ Run Cypress E2E Tests with Mochawesome
+      # --------------------------
+      - name: Run Cypress E2E Tests
+        run: |
+          mkdir -p reports/cypress
+          npx cypress run \
+            --browser chrome \
+            --headless \
+            --reporter mochawesome \
+            --reporter-options reportDir=reports/cypress,overwrite=false,html=true,json=true,charts=true,reportTitle="Cypress E2E Report - Made with ❤️ by Meseret",screenshotsFolder=reports/cypress/screenshots,videosFolder=reports/cypress/videos
+
+      # Upload Cypress HTML/JSON Reports
+      - name: Upload Cypress Mochawesome Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-reports
+          path: reports/cypress
+
+      # Upload Cypress Videos
+      - name: Upload Cypress Videos
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: reports/cypress/videos
+
+      # --------------------------
+      # 8️⃣ Generate Cypress Test Summary Table (Job Summary)
+      # --------------------------
+      - name: Cypress Test Summary Table
+        if: always()
+        run: |
+          RESULTS_JSON="reports/cypress/mochawesome.json"
+          SUMMARY_FILE="$GITHUB_STEP_SUMMARY"
+
+          if [ -f "$RESULTS_JSON" ]; then
+            PASSED=$(jq '.stats.passes' $RESULTS_JSON)
+            FAILED=$(jq '.stats.failures' $RESULTS_JSON)
+            PENDING=$(jq '.stats.pending' $RESULTS_JSON)
+            SKIPPED=$(jq '.stats.skipped' $RESULTS_JSON)
+            DURATION=$(jq '.stats.duration' $RESULTS_JSON)
+
+            echo "### 🧪 Cypress Test Results" >> $SUMMARY_FILE
+            echo "| Result | Passed ✅ | Failed ❌ | Pending ✋ | Skipped ↩️ | Duration 🕗 |" >> $SUMMARY_FILE
+            echo "|--------|-----------|-----------|------------|------------|------------|" >> $SUMMARY_FILE
+            echo "| Passing ✅ | $PASSED | $FAILED | $PENDING | $SKIPPED | ${DURATION}s |" >> $SUMMARY_FILE
+          else
+            echo "⚠️ Cypress results file not found: $RESULTS_JSON" >> $SUMMARY_FILE
+          fi
+        shell: bash
+
+      # --------------------------
+      # 9️⃣ Placeholder for Future Test Automation
+      # --------------------------
+      - name: Test Automation Placeholder
+        run: |
+          echo "Future automation tests (API, integration, performance) will save reports here."
+          mkdir -p reports/future-tests
+
+      # --------------------------
+      # 🔟 Personalized log
+      # --------------------------
+      - name: Made with ❤️ by Meseret
+        run: echo "🚀 Made with ❤️ by Meseret - Automation Tester"
