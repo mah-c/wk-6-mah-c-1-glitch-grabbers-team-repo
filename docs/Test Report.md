@@ -11,7 +11,7 @@
 
 ## 1. 🌟 Executive Summary
 
-The CleanCity Waste Pickup Scheduler application has undergone **comprehensive testing** encompassing functionality, UI/UX, performance, accessibility, and security. Overall, **94.6%** of planned test cases were successful. Major failures and defects have been catalogued and prioritized for urgent attention.
+The CleanCity Waste Pickup Scheduler application has undergone **comprehensive testing** encompassing functionality, UI/UX, performance, accessibility, and security. Overall, **84.6%** of planned test cases were successful. Major failures and defects have been catalogued and prioritized for urgent attention.
 
 ---
 
