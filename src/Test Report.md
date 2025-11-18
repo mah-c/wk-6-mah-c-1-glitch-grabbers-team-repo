@@ -182,7 +182,7 @@ pie title Test Implementation
 
 ## 9. 📑 Issue Tracking & Kanban
 
-- All issues logged in GitHub: [mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo]([https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo](https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues))
+- All issues logged in GitHub: [[mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo]([https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo](https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues))](https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues)
 - Sprint dashboards and burndown charts available in Jira/GitHub (see attachments).
 - Raw [automation logs](link_to_automation_logs.txt) and [coverage report](link_to_coverage_report.html) attached separately.
 
