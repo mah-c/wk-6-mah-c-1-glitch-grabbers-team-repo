@@ -12,6 +12,9 @@ header-includes:
   - \usepackage{fancyhdr}
   - \pagestyle{fancy}
   - \fancyfoot[C]{Page \thepage}
+  - \usepackage{color}
+  - \definecolor{sectionTitle}{rgb}{0.10, 0.26, 0.49}
+  - \definecolor{tableHeader}{rgb}{0.24, 0.34, 0.50}
 ---
 
 \newpage
@@ -19,11 +22,15 @@ header-includes:
 # CleanCity — Waste Pickup Scheduler  
 ## QA Test Report
 
-**Prepared By**: Meseret Akalu  
-**Reviewed By**: Mercy Benu, Viron Ochieng  
-**Prepared Date**: 2025-11-18  
-**Project Title**: CleanCity Waste Pickup Scheduler  
-**Team / Institution**: CleanCity QA Team — Software Testing Mastery in Scrum Course
+> **Prepared By**: Meseret Akalu  
+> **Reviewed By**: Mercy Benu, Viron Ochieng  
+> **Prepared Date**: 2025-11-18  
+> **Project Title**: CleanCity Waste Pickup Scheduler  
+> **Team / Institution**: CleanCity QA Team — Software Testing Mastery in Scrum Course
+
+<br>
+
+> ✨ *"Assuring a cleaner, smarter city — one release at a time."* ✨
 
 ---
 
@@ -31,162 +38,143 @@ header-includes:
 
 1. [Cover Page](#cleancity--waste-pickup-scheduler-qa-test-report)
 2. [Table of Contents](#table-of-contents)
-3. [Executive Summary](#executive-summary-page-3)
-4. [Test Strategy & Approach](#3-test-strategy--approach-page-4)
-5. [Test Environment Details](#4-test-environment-details-page-6)
-6. [Test Execution Summary](#5-test-execution-summary-page-7)
-7. [Defect Analysis & Categorization](#6-defect-analysis--categorization-page-9)
-8. [Risk Assessment](#7-risk-assessment-page-11)
-9. [Recommendations & Improvements](#8-recommendations--improvements-page-13)
-10. [Test Metrics & KPIs](#9-test-metrics--kpis-page-15)
-11. [Appendices (Supporting docs, screenshots, test cases)](#10-appendices-page-17)
+3. [Executive Summary](#executive-summary)
+4. [Test Strategy & Approach](#test-strategy--approach)
+5. [Test Environment Details](#test-environment-details)
+6. [Test Execution Summary](#test-execution-summary)
+7. [Defect Analysis & Categorization](#defect-analysis--categorization)
+8. [Risk Assessment](#risk-assessment)
+9. [Recommendations & Improvements](#recommendations--improvements)
+10. [Test Metrics & KPIs](#test-metrics--kpis)
+11. [Appendices (Evidence & Artifacts, Test Cases, Glossary)](#appendices)
 
 ---
 
 \newpage
 
-## Executive Summary (page 3)
-- **Scope**: Full functional and non-functional QA of CleanCity Waste Pickup Scheduler including core flows (auth, scheduling, admin), new features, and integrations.
-- **Overall status**: The QA effort executed the complete planned suite. Key result: of 34 planned test cases executed, 24 passed and 10 failed. (See Test Execution Summary for details and raw outputs.)
-- **Pass rate** (executed cases): 24/34 → 70.6%.
-- **Key findings**:
-    - Critical issues: session timeout not implemented (security risk), scheduling allowed for past dates (business/ops risk).
-    - High-impact admin and filter defects block a subset of workflows (admin edit, filter combination).
-    - Wishlist synchronization shows intermittent loss—requires a hotfix (SHOP-4589 referenced).
-- **Recommendation**: Proceed with a controlled, phased release (10% initial ramp) only after addressing at minimum the critical security and scheduling fixes or ensuring compensating monitoring and rollback capabilities. Implement enhanced monitoring on payment gateway and login-related flows for first 72 hours.
+## Executive Summary
+
+- **Scope**: Comprehensive QA (functional, non-functional) of CleanCity Waste Pickup Scheduler—core flows (auth, scheduling, admin), new features (wishlist, AR), and 3rd-party integrations.
+- **Overall QA Outcome**: Of 34 planned test cases, 24 passed and 10 failed, for a **pass rate of 70.6%**. High-impact issues include missing session timeout, improper scheduling validation, admin/filters workflow blocks, and wishlist sync (SHOP-4589).
+- **Business Risk**: Two critical issues—security (session) and operational (date validation)—must be resolved. Controlled release is advised (phased 10% cohort, feature flags).
+- **Coverage**: Regression automation (452 scripts, 72% coverage); core business journeys passed (login, scheduling, payment happy-paths); remaining manual/edge scenarios executed.
+- **Recommendation**: Block full launch pending critical fixes; enable intensive monitoring (payment, login, scheduling), and prepare rapid rollback contingencies.
+
+---
 
 \newpage
 
-## 3. Test Strategy & Approach (page 4)
+## Test Strategy & Approach
 
-### Objectives
-- Validate that business-critical journeys are correct, secure, performant, and accessible.
-- Reduce release risk via prioritized testing and automation.
+### QA Objectives
 
-### Scope (Functional Areas)
-- User Authentication & Account Management (registration, login/logout, password reset, profile, preferences)
-- Scheduling & Pickup flows (create, edit, cancel pickups, validation including date/time)
-- Product / Service Catalog & Search (browse, filters, advanced search)
-- Cart, Checkout & Payments (including 5 new payment methods)
-- Admin & Back-office workflows (edit requests, statistics)
-- New features: personalized recommendations, wishlist sharing, AR visualization, in-app chat
+- Exercise and validate all business-critical and edge user journeys for correctness, security, performance, compatibility, and accessibility.
+- Prioritize risk-driven testing, leverage automation, and reduce release uncertainty.
 
-**Non-Functional Areas**
-- Performance/load under realistic and peak conditions
-- Compatibility across Android (v10–v14), iOS (v15–v18), major browsers
-- Security: input validation, session management, secure storage
-- Accessibility: WCAG conformance, screen-reader tests
+### Scope
 
-**Test Design & Techniques**
-- Risk-based prioritization (payments, auth, scheduling first)
-- Test types: functional (black/white-box), boundary-value, equivalence partitions, decision-table testing
-- Regression automated: 452 scripts (existing suite), new features manually tested then automated
-- Exploratory sessions for UX and edge cases
+**Functional Areas**
+- User authentication/account management (register, login/logout, password reset, profile, preferences)
+- Scheduling (create, edit, cancel pickups; proper date/time validation)
+- Service/Product catalog & search (filters, advanced search, AR experience)
+- Cart/Checkout & payments (5 payment gateways, fraud handling, UI/UX)
+- Admin, reporting, and new features (personalized recommendations, in-app chat)
+- **Non-functional**: performance, browser/device compatibility, security, accessibility (WCAG, screen readers)
 
-**Test Execution Model**
-- Manual + automation: manual for new/complex scenarios; automation for regression and repeatable flows.
-- Continuous testing in CI for critical smoke/regression flows.
+### Test Design & Execution
+
+- **Techniques**: Risk-based prioritization, functional (black/white-box), boundary-value, equivalence class, decision-tables, exploratory sessions for UX/edge
+- **Automation**: 452 regression scripts (Selenium/Cypress/Appium); 45 new for this release; automated critical/smoke in CI/CD
+- **Manual**: New, complex, UX scenarios; exploratory and boundary conditions
+- **Continuous Testing**: Automated smoke/regression on every PR in CI/CD
+
+---
 
 \newpage
 
-## 4. Test Environment Details (page 6)
+## Test Environment Details
 
-**Platforms & Browsers**
-- Desktop OS: Windows 10, macOS Ventura
-- Mobile OS: Android 10–14, iOS 15–18
-- Browsers: Chrome, Firefox, Edge, Safari, UC Browser
+### Platforms & Devices
 
-**Infrastructure & Services**
-- Web Server: Apache Tomcat 10
-- Database: MySQL 8.0
-- Payment gateways: Existing + 5 new (note: enhanced monitoring required)
-- Cloud/device matrix: BrowserStack App Live for wide device coverage
+- **Desktop OS**: Windows 10, macOS Ventura
+- **Mobile OS**: Android 10–14, iOS 15–18
+- **Browsers**: Chrome, Firefox, Edge, Safari, UC Browser
+- **Device Matrix**: BrowserStack App Live
 
-**Tools & Frameworks**
-- Test Management: TestLink, TestRail, Jira/GitHub issues
-- Automation (UI): Selenium WebDriver, Cypress
-- Mobile Automation: Appium 2.2.1 (Python 3.11)
-- Performance: JMeter 5.6
-- Static Analysis/Security: SonarQube
-- Accessibility: Accessibility Scanner, VoiceOver/TalkBack
-- CI: Project CI for automated suites — regression in pre-deploy gating
+### Infrastructure
 
-\newpage
+- **Web Server**: Apache Tomcat 10
+- **Database**: MySQL 8.0
+- **Payment Gateways**: All legacy + 5 new integrations
+- **CI/CD**: Automated pipelines for regression, pre-release gating
 
-## 5. Test Execution Summary (page 7)
+### Tools & Services
 
-### Execution Summary (overall)
-- **Total Planned Test Cases**: 34
-- **Total Executed**: 34 (100%)
-- **Passed**: 24 → 70.6%
-- **Failed**: 10 → 29.4%
-- **Blocked**: 0
+- **Test Management**: TestLink, TestRail, Jira / GitHub Issues
+- **Automation**: Selenium WebDriver, Cypress, Appium (Python 3.11)
+- **Performance**: JMeter 5.6
+- **Security/Static Analysis**: SonarQube
+- **Accessibility**: Accessibility Scanner, VoiceOver/TalkBack
 
-**Automation & Coverage**
-- Automated: 45 in new/combined suite
-- Regression pack: 452
-- Automation coverage: 72% (45/63 as per artifacts)
-- Unit/Integration coverage: 87%
-
-**Critical Journeys**
-- Verified and passed: core critical journeys (login, scheduling creation, checkout, payment) for happy-paths. *Note: some critical defects (session timeout, scheduling past-date validation) require fix.*
-
-| Metric                      | Value          |
-|-----------------------------|---------------:|
-| Total Planned               | 34             |
-| Executed                    | 34             |
-| Passed                      | 24             |
-| Failed                      | 10             |
-| Automation Coverage         | 72% (45/63)    |
-| Unit Coverage               | 87%            |
-| Critical Journeys Passed    | 15/15 (happy-path) |
-
-**Note:** Metrics are normalized from original executions for accuracy.
-
-**Screenshots & Evidence**
-- Automation logs, unit coverage screenshots and other attachments referenced in Appendices.
+---
 
 \newpage
 
-## 6. Defect Analysis & Categorization (page 9)
+## Test Execution Summary
 
-### Defect Summary
-- **Total distinct defects**: 9 (plus 1 enhancement)
-- **Severity**:  
-    - Critical: 1  
-    - High: 3  
-    - Medium: 3  
-    - Low: 1  
-    - Enhancement: 1
+| Metric                      | Value         |
+|-----------------------------|--------------:|
+| Total Planned Test Cases    | 34            |
+| Executed                    | 34 (100%)     |
+| Passed                      | 24 (70.6%)    |
+| Failed                      | 10 (29.4%)    |
+| Blocked                     | 0             |
+| Regression Pack             | 452           |
+| Automation Coverage         | 72%           |
+| Unit/Integration Coverage   | 87%           |
+| Critical Journeys           | 15/15 pass    |
 
-| ID  | Description                               | Severity     | Status | Note                                              |
-|-----|-------------------------------------------|--------------|--------|---------------------------------------------------|
-| 1   | Numerical name accepted                   | Medium       | Open   | Data integrity risk on user profiles              |
-| 2   | Can schedule pickup for past date         | High         | Open   | Scheduling validation missing                     |
-| 3   | Session timeout not implemented           | Critical     | Open   | Sessions persist beyond expected TTL              |
-| 4   | Dark mode missing on Awareness page       | Enhancement  | Open   | UX improvement                                   |
-| 5   | Accessibility alternatives missing        | Medium       | Open   | Lacks alt text/ARIA for graphics                  |
-| 6   | Logout does not clear credentials         | Medium       | Open   | Security/privacy issue                            |
-| 7   | Missing data in system statistics         | Low          | Open   | Intermittent aggregation issue                    |
-| 8   | Admin cannot use Edit in requests         | High         | Open   | Admin functionality blocked                       |
-| 9   | Filter does not combine properly          | High         | Open   | Workflow disruption                               |
+**Coverage/Effectiveness**
 
-**Root Causes**
-- Missing validation rules
-- Session/token management issues
-- Partial client–server sync (wishlist)
-- Accessibility/UI attribute gaps
+- **Regression**: 452 automated scripts, 72% coverage; all critical/happy-path journeys pass.
+- **Manual**: New features, error/edge cases, and accessibility.
+- **Evidence**: Full logs, coverage screenshots, and attachments in Appendices.
 
-**Recommendations**
-- Critical/High: immediate triage/hotfix or block release until mitigated.
-- Medium/Low: next sprint, with clear ownership/test verification.
-- Enhancement: backlog for future UX sprint.
+**Highlights**
+
+- **Critical journeys** (login, pickup scheduling, checkout, payment): All happy-paths verified and passed.
+- **Defects** (see below): Significant critical/high issues found; selected logs and screenshots attached in evidence.
+
+---
 
 \newpage
 
-## 7. Risk Assessment (page 11)
+## Defect Analysis & Categorization
 
-### Risk Summary & Matrix
+| ID  | Description                               | Severity     | Status | Note                                         |
+|-----|-------------------------------------------|--------------|--------|----------------------------------------------|
+| 1   | Numerical name accepted                   | Medium       | Open   | Data integrity risk                          |
+| 2   | Can schedule pickup for past date         | High         | Open   | Scheduling validation missing                |
+| 3   | Session timeout not implemented           | Critical     | Open   | Security risk, session persists              |
+| 4   | Dark mode missing on Awareness page       | Enhancem.    | Open   | UX/Accessibility                             |
+| 5   | Accessibility alternatives missing        | Medium       | Open   | No alt text/ARIA for graphics                |
+| 6   | Logout does not clear credentials         | Medium       | Open   | Security/privacy                             |
+| 7   | Missing data in system statistics         | Low          | Open   | Intermittent aggregation issue               |
+| 8   | Admin cannot use Edit in requests         | High         | Open   | Admin workflow blocked                       |
+| 9   | Filter does not combine properly          | High         | Open   | User filtering disrupted                     |
+
+**Root Causes**  
+- Input validation, session/token handling, UI attribute gaps, partial client–server sync (wishlist)
+
+**Critical/High-impact Recommendations**  
+- Immediate triage or block release
+- Apply hotfixes & retest before open rollout
+
+---
+
+\newpage
+
+## Risk Assessment
 
 | Risk    | Area              | Probability      | Impact        | Severity        |
 |---------|-------------------|------------------|---------------|-----------------|
@@ -195,119 +183,130 @@ header-includes:
 | RS_003  | Session timeout   | High             | High          | Critical        |
 | RS_004  | Admin Edit        | Very High        | Very High     | Critical        |
 | RS_005  | Accessibility gaps| Medium           | Medium        | Moderate        |
-| RS_006  | Browser compatibility | Very High   | Medium        | Severe          |
+| RS_006  | Browser compat.   | Very High        | Medium        | Severe          |
 | RS_007  | Logout/Credential | Medium           | Medium        | Moderate        |
 
-**Release Risk Recommendation:**  
-Do **not** proceed to full open release until critical issues are fixed OR compensating controls (feature flag, restricted rollout, enhanced monitoring & rollback) are in place.
+**Recommendation**  
+Block release until all critical issues resolved or fully mitigated (feature-flag, enhanced telemetry/rollback).
 
-**Mitigation Actions:**
-- Hotfix SHOP-4589 (wishlist)
-- Implement session TTL/server enforcement
-- Date validation on scheduling (<now blocked)
-- Feature flags for payment method rollout
-- Expanded telemetry/alerts (login, payment, server)
+**Mitigation Plan**
+- Patch and deploy hotfixes (e.g., SHOP-4589)
+- Enforce session TTL server-side and client-side
+- Tighten scheduling validation (no past dates)
+- Cohort-based monitor on new payment methods
+- Expand alerts/telemetry for login/payments
+
+---
 
 \newpage
 
-## 8. Recommendations & Improvements (page 13)
+## Recommendations & Improvements
 
-### Immediate (Next 48–72 hours)
-- Patch and deploy: session timeout (ID3), scheduling validation (ID2), admin edit (ID8)
-- Prepare SHOP-4589 hotfix & verify post-deploy
-- Enable enhanced monitoring for 72h rollout
+### Immediate (72 hours)
+
+- Patch/verify: session timeout, past-date scheduling, admin edit (IDs 3, 2, 8)
+- Deploy SHOP-4589 wishlist hotfix, monitor post-deploy
+- Enhance 24/7 monitoring, pre-release security checks
 
 ### Short-term (Sprint)
-- High & medium defect resolution
-- Improve logout: clear creds/session on both ends
-- Server-side scheduling validation for past dates
 
-### Medium-term (2–6 sprints)
-- WCAG accessibility fixes for AA compliance
-- Expand automation: >90% regression, add accessibility to CI
-- Browser compatibility: Firefox, UC fixes
+- Complete all high/medium defect fixes
+- Logout: Ensure credentials/sessions are cleared both sides
+- Increment automation and accessibility (target >90% coverage)
 
-### Process
-- Pre-release gating checklist (security, scheduling)
-- Feature-flagged release path with cohort monitoring
-- Synthetic, scheduled canary runs for payment/auth flows
+### Mid-term (2–6 sprints)
 
-\newpage
+- Full WCAG AA compliance
+- Regression suite expansion and accessibility in CI
+- Fix browser-specific issues (Firefox, UC)
+- Implement release gating and canary synthetic runs
 
-## 9. Test Metrics & KPIs (page 15)
-
-| Metric                       | Value                  |
-|------------------------------|-----------------------:|
-| Test case execution          | 34/34 (100%)           |
-| Pass rate (by case)          | 24/34 → 70.6%          |
-| Defect density               | 9 across full suite    |
-| Automation coverage          | 72% (as per artifacts) |
-| Regression scripts           | 452 (regression pack)  |
-| Code coverage                | 87% (unit/integration) |
-| Critical journeys            | 15/15 passed (happy)   |
-| TTD (critical defects)       | avg. 1.2d/test cycle   |
-
-**Suggested KPIs (post-release)**
-- Production error rate (per 1k sessions, 72h threshold for rollback)
-- Payment failure delta from baseline
-- Login/auth failure + average session duration
-- RTO for critical fixes: ≤24–72h
+---
 
 \newpage
 
-## 10. Appendices (page 17)
+## Test Metrics & KPIs
+
+| Metric                       | Value            |
+|------------------------------|-----------------:|
+| Test case execution          | 34/34 (100%)     |
+| Pass rate                    | 24/34 (70.6%)    |
+| Defect density               | 9 (full suite)   |
+| Automation coverage          | 72%              |
+| Regression scripts           | 452              |
+| Unit/integration coverage    | 87%              |
+| Critical journeys passed     | 15/15            |
+| TTD (critical defects)       | avg. 1.2d/test   |
+
+**Suggested KPIs (post-release)**  
+- Error rate per 1k sessions (rollback threshold: 72h)
+- Payment gateway failure delta (vs. baseline)
+- Login/auth failures and mean session duration
+- Mean TTD for critical fixes (target ≤ 72h)
+
+---
+
+\newpage
+
+## Appendices
 
 ### A. Evidence & Attachments
 
-**Automation logs & coverage screenshots**  
-- `assets/unit-test-screenshot.png`
-- Automation logs: `link_to_automation_logs.txt` (internal)
-- Coverage report: `link_to_coverage_report.html` (internal)
+#### QA Test Screenshots (Selected)
 
-**Selected QA Screenshots:**  
-![Unit Test Screenshot](https://github.com/user-attachments/assets/4b12fa12-c8a5-47da-8d67-7cf0784948ce)  
-![Screenshot 1](https://github.com/user-attachments/assets/ee92012e-2d77-4c47-a4dc-b4c9a0b32af2)  
-![Screenshot 2](https://github.com/user-attachments/assets/04115f6a-a603-4235-9f1b-1fb953162aa2)  
-![Screenshot 3](https://github.com/user-attachments/assets/4287e42c-1bab-4c17-9998-483792c67669)  
-![Screenshot 4](https://github.com/user-attachments/assets/91f7aa31-ebbd-4c66-b993-2d3582871172)  
-![Screenshot 5](https://github.com/user-attachments/assets/a5e050c7-d3e2-44f7-b327-e100590b7c08)  
+| # | Description                        | Image Preview                                                        |
+|---|------------------------------------|-----------------------------------------------------------------------|
+| 1 | Unit Test Coverage                 | ![Unit Test Screenshot](https://github.com/user-attachments/assets/4b12fa12-c8a5-47da-8d67-7cf0784948ce) |
+| 2 | Login Success Feedback             | ![Screenshot 1](https://github.com/user-attachments/assets/ee92012e-2d77-4c47-a4dc-b4c9a0b32af2)           |
+| 3 | Payment Gateway UX                 | ![Screenshot 2](https://github.com/user-attachments/assets/04115f6a-a603-4235-9f1b-1fb953162aa2)           |
+| 4 | Scheduling Past Date Error         | ![Screenshot 3](https://github.com/user-attachments/assets/4287e42c-1bab-4c17-9998-483792c67669)           |
+| 5 | Wishlist Sync Issue                | ![Screenshot 4](https://github.com/user-attachments/assets/91f7aa31-ebbd-4c66-b993-2d3582871172)           |
+| 6 | Accessibility: Screen Reader Alert | ![Screenshot 5](https://github.com/user-attachments/assets/a5e050c7-d3e2-44f7-b327-e100590b7c08)           |
+
+**Other Supporting Artifacts**
+
+- **Automation logs**: *[Internal link: `link_to_automation_logs.txt`]*
+- **Coverage reports**: *[Internal link: `link_to_coverage_report.html`]*
+- **Defect references**: [GitHub Issue Tracker](https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues), SHOP-4589
+
+---
 
 ### B. Sample Test Cases
 
-- **TC_LG_001 — Login Functionality**
-    - Steps: Open app → Navigate to Login → Enter valid email/password → Submit
-    - Test Data: Email user@cleancity.com / Password password123
-    - Expected: Login successful; redirected to dashboard
-    - Actual: Login successful — *Pass*
+#### TC_LG_001 — Login Functionality
+- **Steps**: Open app → Go to Login → Enter valid email/password → Submit
+- **Test Data**: Email `user@cleancity.com` / Pass `password123`
+- **Expected**: Redirect to dashboard if successful.
+- **Actual**: Login successful. **PASS**
 
-- **TC_WS_002 — Wishlist Synchronization**
-    - Steps: Add items to wishlist on A → Remove on B → Refresh A
-    - Expected: Wishlist state consistent across devices
-    - Actual: Intermittent loss — *Fail* (SHOP-4589)
+#### TC_WS_002 — Wishlist Synchronization
+- **Steps**: Add item on Device A, remove on Device B, refresh Device A.
+- **Expected**: Wishlist state synchronized across devices.
+- **Actual**: Intermittent loss. **FAIL** *(SHOP-4589)*
 
-- **TC_AC_001 — Accessibility**
-    - Steps: VoiceOver/TalkBack across user flows
-    - Expected: All content announced/navigable
-    - Actual: Missing alt texts/labels — *Partial*
+#### TC_AC_001 — Accessibility
+- **Steps**: Navigate using VoiceOver/TalkBack on key flows.
+- **Expected**: All UI elements announced, navigable.
+- **Actual**: Missing image alt texts/labels. **PARTIAL**
 
-### C. Issue Tracker & References
-
-- Team repo for demo: [GitHub Issues](https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues)
-- Ticket: `SHOP-4589` — Wishlist sync hotfix
-
-### D. Glossary & Notes
-
-- **Critical journey**: business-critical path (login → schedule → checkout → payment)
-- *Percentages normalized if source artifacts inconsistent*
-- Any URLs above may require internal access.
+*Full test cases: available via TestRail/Jira export (on request).*
 
 ---
 
-\newpage
+### C. Glossary & Notes
 
-Prepared by: Meseret Akalu (CleanCity QA Team)  
-Reviewed by: Mercy Benu, Viron Ochieng
+- **Critical journey**: End-to-end user flow (login → schedule → checkout → payment)
+- **SHOP-4589**: Wishlist sync bug/hotfix
+- *Percentages normalized if discrepancies in artifact source*
+- Some internal evidence URLs may require access.
 
 ---
 
-**End of document**
+> **Prepared by:** Meseret Akalu (CleanCity QA Team)  
+> **Reviewed by:** Mercy Benu, Viron Ochieng
+
+---
+
+<div style="text-align:center; font-size:1.2em;">
+  <strong>End of Report — Delivering Clean, Reliable User Experiences</strong>
+</div>
