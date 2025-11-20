@@ -11,7 +11,7 @@ describe('CleanCity Waste Pickup Scheduler App - 15 Test Cases', () => {
     cy.get('.navbar').should('be.visible');
   });
 
-  // 2. Navigation links exist
+  // 2. Navigation links exist must be 
   it('Navigation links should exist', () => {
     cy.get('#nav-menu .nav-link').should('have.length.at.least', 5);
     cy.get('#nav-menu .nav-link[data-page="home"]').should('exist');
