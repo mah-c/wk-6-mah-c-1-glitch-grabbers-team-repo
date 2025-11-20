@@ -284,4 +284,5 @@ C. Issue Tracker & References
 - Issues logged in GitHub: https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues (team repo for demo)
 - Jira: https://glitch-grabbers.atlassian.net/jira/software/projects/KAN/summary
 - Video presentation: https://drive.google.com/file/d/1OYA8d8LFqxlcUaua-gI-7TZPkQVCI-af/view?usp=drive_link
+
 Reviewed by: Mercy Benu, Viron Ochieng
