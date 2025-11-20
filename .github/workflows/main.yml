@@ -125,7 +125,7 @@ jobs:
           mkdir -p reports/future-tests
 
       # --------------------------
-      # 🔟 Personalized log
+      # 🔟 Personalized log to 
       # --------------------------
       - name: Made with ❤️ by Meseret
         run: echo "🚀 Made with ❤️ by Meseret - Automation Tester"
