@@ -85,7 +85,7 @@ Infrastructure & Services
 
 Tools & Frameworks
 - Test Management: TestLink, TestRail, Jira/GitHub issues
-- Automation (UI): Selenium WebDriver, Cypress
+- Automation (UI):  Cypress
 - Mobile Automation: Appium 2.2.1 (Python 3.11)
 - Performance: JMeter 5.6
 - Static Analysis/Security: SonarQube
