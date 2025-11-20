@@ -19,7 +19,7 @@ describe('CleanCity Waste Pickup Scheduler App - 15 Test Cases', () => {
     cy.get('#nav-menu .nav-link[data-page="register"]').should('exist');
   });
 
-  // 3. Login page form exists
+  // 3. Login page form exists  to b estetd 
   it('Login form should exist', () => {
     cy.get('.nav-link[data-page="login"]').click();
     cy.get('#login-page').should('be.visible');
@@ -198,3 +198,4 @@ it('Dashboard table should exist', () => {
     cy.get('#register-page').should('be.visible');
   });
 });
+

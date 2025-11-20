@@ -5,7 +5,7 @@ Prepared By: Meseret Akalu
 Reviewed By: Mercy Benu, Viron Ochieng  
 Prepared Date: 2025-11-18  
 Project Title: CleanCity Waste Pickup Scheduler  
-Team / Institution: CleanCity QA Team — Software Testing Mastery in Scrum Course
+Team: Glitch grabbers
 
 ---
 
@@ -33,8 +33,7 @@ Executive Summary (page 3)
 - Key findings:
   - Critical issues found: session timeout not implemented (security risk), scheduling allowed for past dates (business/ops risk).
   - High-impact admin and filter defects block a subset of workflows (admin edit, filter combination).
-  - Wishlist synchronization shows intermittent loss — requires a hotfix (SHOP-4589 referenced).
-- Recommendation: Proceed with a controlled, phased release (10% initial ramp) only after addressing at minimum the critical security and scheduling fixes or ensuring compensating monitoring and rollback capabilities. Implement enhanced monitoring on payment gateway and login-related flows for first 72 hours.
+- Recommendation: Proceed with a controlled, phased release (10% initial ramp) only after addressing at minimum the critical security and scheduling fixes.Implement enhanced monitoring on login-related flows for first 72 hours.
 
 ---
 
@@ -47,8 +46,7 @@ Objectives
 Scope (Functional Areas)
 - User Authentication & Account Management (registration, login/logout, password reset, profile, preferences)
 - Scheduling & Pickup flows (create, edit, cancel pickups, validation including date/time)
-- Product / Service Catalog & Search (browse, filters, advanced search)
-- Cart, Checkout & Payments (including 5 new payment methods)
+- Service Catalog & Search (browse, filters)
 - Admin & Back-office workflows (edit requests, statistics)
 - New features: personalized recommendations, wishlist sharing, AR visualization, in-app chat
 
@@ -59,13 +57,12 @@ Non-Functional Areas
 - Accessibility: WCAG conformance, screen-reader tests
 
 Test Design & Techniques
-- Risk-based prioritization (payments, auth, scheduling first)
+- Risk-based prioritization (auth, scheduling first)
 - Test types used: functional (black/white-box), boundary-value, equivalence partitions, decision-table testing
-- Regression automated: existing regression suite fully automated (452 scripts). New features manually tested and automated in parallel.
 - Exploratory sessions conducted for UX and edge cases.
 
 Test Execution Model
-- Combined manual + automation: manual for new/complex scenarios; automation for regression and repeatable flows.
+- Combined manual + automation: manual for new/complex scenarios; automation for repeatable flows.
 - Continuous testing in CI for critical smoke/regression flows.
 
 ---
@@ -80,8 +77,6 @@ Platforms & Browsers
 Infrastructure & Services
 - Web Server: Apache Tomcat 10
 - Database: MySQL 8.0
-- Payment gateways: Existing + 5 new methods (note: enhanced monitoring required)
-- Cloud/device matrix: BrowserStack App Live used for wide device coverage
 
 Tools & Frameworks
 - Test Management: TestLink, TestRail, Jira/GitHub issues
@@ -110,7 +105,7 @@ Automation & Coverage
 - Unit/Integration Code Coverage (from coverage reports): 87%
 
 Critical Journeys
-- Verified and passed: core critical journeys (login, scheduling creation, checkout, payment) for happy-paths in test environment. Note: some critical defects (session timeout, scheduling past-date validation) require fixes.
+- Verified and passed: core critical journeys (login, scheduling creation, filtering results) for happy-paths in test environment. Note: some critical defects (session timeout, scheduling past-date validation) require fixes.
 
 Sample Execution Table (excerpt)
 | Metric | Value |
@@ -213,8 +208,8 @@ Mitigation Actions
 --------------------------------------------
 Immediate (Next 48–72 hours)
 - Fix and deploy patches for critical defects: session timeout (ID3), scheduling validation (ID2), admin edit (ID8).
-- Prepare hotfix for wishlist sync (SHOP-4589) and plan immediate verification after deployment.
-- Enable enhanced monitoring (APM/tracing, payment gateway metrics, auth flows) for first 72 hours of rollout.
+- Enable the "Edit" button on the Admin dashboard.
+- Fix the filter function to filter requests by status and location.
 
 Short-term (Sprint-level)
 - Resolve high & medium defects; include regression tests and automation for each fix.
@@ -229,7 +224,6 @@ Medium-term (2–6 sprints)
 Process Improvements
 - Add pre-release checklist gating critical security and scheduling validations.
 - Maintain a canary/feature-flagged release path with cohort-based monitoring.
-- Expand A/B or canary monitoring to include synthetic tests for payment/auth every 5–10 minutes.
 
 ---
 
@@ -246,8 +240,8 @@ Key Metrics Tracked
 - Time to fix (TTF) estimates (to be tracked with dev): Critical fixes target <72 hours
 
 Suggested KPIs for Post-Release
-- Production error rate (per 1k sessions) for first 72 hours — threshold for rollback set to X (agree with stakeholders)
-- Payment failure rate delta from baseline
+- Production error rate (per 1k sessions) for first 72 hours
+- Threshold for rollback set to X (agree with stakeholders)
 - Login/auth failure rate and average session duration
 - Recovery time objective (RTO) for critical bug fixes ≤ 24–72 hours
 
@@ -288,21 +282,6 @@ B. Sample Test Cases (selected)
 
 C. Issue Tracker & References
 - Issues logged in GitHub: https://github.com/mah-c/wk-6-mah-c-1-glitch-grabbers-team-repo/issues (team repo for demo)
-- Referenced ticket: SHOP-4589 — Wishlist synchronization hotfix
-
-D. Glossary & Notes
-- "Critical journey": business-critical path (e.g., login → schedule → checkout → payment)
-- Percentages normalized where inconsistencies found in source artifacts
-- Any URLs above may require internal access or permissions.
-
----
-
-Prepared by: Meseret Akalu (CleanCity QA Team)  
+- Jira: https://glitch-grabbers.atlassian.net/jira/software/projects/KAN/summary
+- Video presentation: https://drive.google.com/file/d/1OYA8d8LFqxlcUaua-gI-7TZPkQVCI-af/view?usp=drive_link
 Reviewed by: Mercy Benu, Viron Ochieng
-
-If you'd like, I can:
-- Produce a printable PDF version (with proper pagination/headers) from this Markdown, or  
-- Export this report into a GitHub repo file and create initial GitHub issue templates for the high/critical defects, or  
-- Create a prioritized action plan (Jira/GitHub issue checklist) with owners and sprint estimates.
-
-Which of those would you like me to do next?
