@@ -299,10 +299,3 @@ D. Glossary & Notes
 
 Prepared by: Meseret Akalu (CleanCity QA Team)  
 Reviewed by: Mercy Benu, Viron Ochieng
-
-If you'd like, I can:
-- Produce a printable PDF version (with proper pagination/headers) from this Markdown, or  
-- Export this report into a GitHub repo file and create initial GitHub issue templates for the high/critical defects, or  
-- Create a prioritized action plan (Jira/GitHub issue checklist) with owners and sprint estimates.
-
-Which of those would you like me to do next?
