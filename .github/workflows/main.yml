@@ -21,53 +21,43 @@ jobs:
         with:
           node-version: 20
 
-      # 3️⃣ Install dependencies (including jest-html-reporters & mochawesome)
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: |
           npm install
           npm install --save-dev jest-html-reporters mochawesome
 
-      # --------------------------
       # 4️⃣ Run Jest Unit Tests with HTML + Coverage
-      # --------------------------
       - name: Run Jest Unit Tests
         run: |
           mkdir -p reports/jest
           npx jest "Unit Test/**/*.test.js" --ci --verbose --coverage --coverageReporters=text
         continue-on-error: false
 
-      # Upload Jest HTML Report
       - name: Upload Jest HTML Report
         uses: actions/upload-artifact@v4
         with:
           name: jest-html-report
           path: reports/jest/jest-report.html
 
-      # Upload Jest Coverage JSON
       - name: Upload Jest Coverage JSON
         uses: actions/upload-artifact@v4
         with:
           name: jest-coverage
           path: coverage/coverage-final.json
 
-      # --------------------------
       # 5️⃣ Install live-server
-      # --------------------------
       - name: Install Live Server
         run: npm install -g live-server
 
-      # --------------------------
       # 6️⃣ Start Live Server for Cypress
-      # --------------------------
       - name: Start Live Server
         run: |
           live-server ./ --port=5500 &
           npx wait-on http://127.0.0.1:5500
         shell: bash
 
-      # --------------------------
       # 7️⃣ Run Cypress E2E Tests with Mochawesome
-      # --------------------------
       - name: Run Cypress E2E Tests
         run: |
           mkdir -p reports/cypress
@@ -77,23 +67,18 @@ jobs:
             --reporter mochawesome \
             --reporter-options reportDir=reports/cypress,overwrite=false,html=true,json=true,charts=true,reportTitle="Cypress E2E Report - Made with ❤️ by Meseret",screenshotsFolder=reports/cypress/screenshots,videosFolder=reports/cypress/videos
 
-      # Upload Cypress HTML/JSON Reports
       - name: Upload Cypress Mochawesome Reports
         uses: actions/upload-artifact@v4
         with:
           name: cypress-reports
           path: reports/cypress
 
-      # Upload Cypress Videos
       - name: Upload Cypress Videos
         uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
           path: reports/cypress/videos
 
-      # --------------------------
-      # 8️⃣ Generate Cypress Test Summary Table (Job Summary)
-      # --------------------------
       - name: Cypress Test Summary Table
         if: always()
         run: |
@@ -116,9 +101,7 @@ jobs:
           fi
         shell: bash
 
-      # --------------------------
-      # 9️⃣ GitLeaks secret scan (detect leaked secrets in git history)
-      # --------------------------
+      # 9️⃣ GitLeaks secret scan
       - name: Run Gitleaks secret scan
         uses: zricethezav/gitleaks-action@v2
         with:
@@ -154,9 +137,7 @@ jobs:
           fi
         shell: bash
 
-      # --------------------------
       # 🔟 Trivy filesystem vulnerability scan + report
-      # --------------------------
       - name: Install Trivy
         run: |
           mkdir -p /tmp/trivy-bin
@@ -166,7 +147,6 @@ jobs:
       - name: Run Trivy filesystem scan (JSON + SARIF)
         run: |
           mkdir -p reports/trivy
-          # run filesystem scan and write JSON and SARIF outputs (do not fail the job on findings)
           trivy fs --format json --output reports/trivy/trivy-report.json --no-progress . || true
           trivy fs --format sarif --output reports/trivy/trivy-report.sarif --no-progress . || true
         continue-on-error: true
@@ -208,16 +188,51 @@ jobs:
           fi
         shell: bash
 
-      # --------------------------
       # 1️⃣1️⃣ Placeholder for Future Test Automation
-      # --------------------------
       - name: Test Automation Placeholder
         run: |
           echo "Future automation tests (API, integration, performance) will save reports here."
           mkdir -p reports/future-tests
 
-      # --------------------------
-      # 1️⃣2️⃣ Personalized log to 
-      # --------------------------
+      # 1️⃣3️⃣ JMeter Performance Test
+      - name: Install JMeter
+        run: |
+          wget https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+          tar -xzf apache-jmeter-5.6.3.tgz
+          export JMETER_HOME=$PWD/apache-jmeter-5.6.3
+          echo "JMeter Installed at $JMETER_HOME"
+          $JMETER_HOME/bin/jmeter --version
+
+      - name: Run JMeter Test
+        run: |
+          export JMETER_HOME=$PWD/apache-jmeter-5.6.3
+          mkdir -p reports/jmeter
+          # Replace 'meseret.jmx' with your jmx file
+          $JMETER_HOME/bin/jmeter -n -t meseret.jmx -l reports/jmeter/results.jtl -e -o reports/jmeter/html-report
+
+      - name: Upload JMeter Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-report
+          path: reports/jmeter
+
+      - name: JMeter Summary Table
+        if: always()
+        run: |
+          SUMMARY_FILE="$GITHUB_STEP_SUMMARY"
+          JTL_FILE="reports/jmeter/results.jtl"
+          if [ -f "$JTL_FILE" ]; then
+            PASSED=$(grep -c 's="true"' $JTL_FILE || true)
+            FAILED=$(grep -c 's="false"' $JTL_FILE || true)
+            echo "### 🚦 JMeter Test Results" >> $SUMMARY_FILE
+            echo "| Passed | Failed |" >> $SUMMARY_FILE
+            echo "|--------|--------|" >> $SUMMARY_FILE
+            echo "| $PASSED | $FAILED |" >> $SUMMARY_FILE
+          else
+            echo "⚠️ JMeter results file not found: $JTL_FILE" >> $SUMMARY_FILE
+          fi
+        shell: bash
+
+      # 1️⃣4️⃣ Personalized log to 
       - name: Made with ❤️ by Meseret
         run: echo "🚀 Made with ❤️ by Meseret - Automation Tester"
