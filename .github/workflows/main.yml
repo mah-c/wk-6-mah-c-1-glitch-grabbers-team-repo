@@ -117,7 +117,99 @@ jobs:
         shell: bash
 
       # --------------------------
-      # 9️⃣ Placeholder for Future Test Automation
+      # 9️⃣ GitLeaks secret scan (detect leaked secrets in git history)
+      # --------------------------
+      - name: Run Gitleaks secret scan
+        uses: zricethezav/gitleaks-action@v2
+        with:
+          args: --report-path=reports/gitleaks/gitleaks-report.json --report-format=json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Upload Gitleaks Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-report
+          path: reports/gitleaks
+
+      - name: Gitleaks Summary
+        if: always()
+        run: |
+          mkdir -p reports/gitleaks
+          SUMMARY_FILE="$GITHUB_STEP_SUMMARY"
+          REPORT="reports/gitleaks/gitleaks-report.json"
+
+          if [ -f "$REPORT" ]; then
+            SECRETS_FOUND=$(jq '[.[]?] | length' $REPORT)
+            echo "### 🔐 Gitleaks Secret Scan" >> $SUMMARY_FILE
+            if [ "$SECRETS_FOUND" -gt 0 ]; then
+              echo "- Secrets found by Gitleaks: **$SECRETS_FOUND** (see artifact 'gitleaks-report')" >> $SUMMARY_FILE
+            else
+              echo "- No secrets found by Gitleaks ✅" >> $SUMMARY_FILE
+            fi
+          else
+            echo "⚠️ Gitleaks report not found: $REPORT" >> $SUMMARY_FILE
+          fi
+        shell: bash
+
+      # --------------------------
+      # 🔟 Trivy filesystem vulnerability scan + report
+      # --------------------------
+      - name: Install Trivy
+        run: |
+          mkdir -p /tmp/trivy-bin
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+          trivy --version
+
+      - name: Run Trivy filesystem scan (JSON + SARIF)
+        run: |
+          mkdir -p reports/trivy
+          # run filesystem scan and write JSON and SARIF outputs (do not fail the job on findings)
+          trivy fs --format json --output reports/trivy/trivy-report.json --no-progress . || true
+          trivy fs --format sarif --output reports/trivy/trivy-report.sarif --no-progress . || true
+        continue-on-error: true
+
+      - name: Upload Trivy Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-reports
+          path: reports/trivy
+
+      - name: Trivy Summary
+        if: always()
+        run: |
+          REPORT_JSON="reports/trivy/trivy-report.json"
+          SUMMARY_FILE="$GITHUB_STEP_SUMMARY"
+
+          if [ -f "$REPORT_JSON" ]; then
+            TOTAL_VULNS=$(jq '[.Results[].Vulnerabilities[]?] | length' $REPORT_JSON)
+            CRITICAL=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="CRITICAL")] | length' $REPORT_JSON)
+            HIGH=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="HIGH")] | length' $REPORT_JSON)
+            MEDIUM=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="MEDIUM")] | length' $REPORT_JSON)
+            LOW=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="LOW")] | length' $REPORT_JSON)
+            UNKNOWN=$(jq '[.Results[].Vulnerabilities[]? | select(.Severity=="UNKNOWN")] | length' $REPORT_JSON)
+
+            echo "### 🛡️ Trivy Filesystem Scan" >> $SUMMARY_FILE
+            echo "| Severity | Count |" >> $SUMMARY_FILE
+            echo "|----------|-------:|" >> $SUMMARY_FILE
+            echo "| CRITICAL | $CRITICAL |" >> $SUMMARY_FILE
+            echo "| HIGH     | $HIGH |" >> $SUMMARY_FILE
+            echo "| MEDIUM   | $MEDIUM |" >> $SUMMARY_FILE
+            echo "| LOW      | $LOW |" >> $SUMMARY_FILE
+            echo "| UNKNOWN  | $UNKNOWN |" >> $SUMMARY_FILE
+            echo "" >> $SUMMARY_FILE
+            echo "- Total vulnerabilities: **$TOTAL_VULNS**" >> $SUMMARY_FILE
+            echo "- Full reports are uploaded as artifacts: trivy-reports" >> $SUMMARY_FILE
+          else
+            echo "⚠️ Trivy JSON report not found: $REPORT_JSON" >> $SUMMARY_FILE
+          fi
+        shell: bash
+
+      # --------------------------
+      # 1️⃣1️⃣ Placeholder for Future Test Automation
       # --------------------------
       - name: Test Automation Placeholder
         run: |
@@ -125,7 +217,7 @@ jobs:
           mkdir -p reports/future-tests
 
       # --------------------------
-      # 🔟 Personalized log to 
+      # 1️⃣2️⃣ Personalized log to 
       # --------------------------
       - name: Made with ❤️ by Meseret
         run: echo "🚀 Made with ❤️ by Meseret - Automation Tester"
